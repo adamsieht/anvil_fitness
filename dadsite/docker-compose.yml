@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: anvilfitness_web
+    env_file:
+      - .env
+    volumes:
+      - ./db:/app/db
+      - ./staticfiles:/app/staticfiles
+      - ./media:/app/media
+      - ./logs:/app/logs
+    expose:
+      - "8000"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: anvilfitness_caddy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./staticfiles:/app/staticfiles:ro
+      - ./media:/app/media:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - web
+    restart: unless-stopped
+
+volumes:
+  caddy_data:
+  caddy_config:

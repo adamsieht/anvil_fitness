@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+
+{% block title %}Anvil Fitness - Transform Your Health After 40{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 text-center">
+                <h1 class="display-3 fw-bold mb-4">
+                    Transform Your Health <span class="text-warning">After 40</span>
+                </h1>
+                <p class="lead mb-5">
+                    Discover the strength you never knew you had. Personalized fitness training 
+                    designed specifically for adults ready to prioritize their health and build lasting vitality.
+                </p>
+                <div class="d-flex gap-3 justify-content-center flex-wrap">
+                    <a href="{% url 'fitness:contact' %}" class="btn btn-warning btn-lg">
+                        <i class="fas fa-rocket me-2"></i>Start Your Journey
+                    </a>
+                    <a href="{% url 'fitness:about' %}" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-user me-2"></i>Meet Your Trainer
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Anvil Fitness -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5">
+                <h2 class="section-title">Why Anvil Fitness?</h2>
+                <p class="lead text-muted">Specialized training that understands your unique needs</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="service-item fade-in">
+                    <i class="fas fa-heart text-warning"></i>
+                    <h4>Health-First Approach</h4>
+                    <p>Prioritizing long-term wellness over quick fixes. Every program is designed with your overall health and sustainability in mind.</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="service-item fade-in">
+                    <i class="fas fa-users text-warning"></i>
+                    <h4>40+ Expertise</h4>
+                    <p>Specialized knowledge in training adults over 40, understanding the unique challenges and opportunities of this life stage.</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="service-item fade-in">
+                    <i class="fas fa-mobile-alt text-warning"></i>
+                    <h4>Flexible Communication</h4>
+                    <p>Continue using your preferred fitness app while receiving expert guidance tailored to your individual goals and progress.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Services -->
+{% if featured_services %}
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5">
+                <h2 class="section-title">Featured Services</h2>
+                <p class="lead text-muted">Comprehensive fitness solutions designed for your success</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            {% for service in featured_services %}
+            <div class="col-lg-4">
+                <div class="card fade-in">
+                    <div class="card-header">
+                        <i class="{{ service.icon }}"></i>
+                        <h4>{{ service.name }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>{{ service.description|truncatewords:20 }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-5">
+            <a href="{% url 'fitness:services' %}" class="btn btn-outline-warning btn-lg">
+                View All Services <i class="fas fa-arrow-right ms-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Success Stories -->
+{% if testimonials %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5">
+                <h2 class="section-title">Success Stories</h2>
+                <p class="lead text-muted">Real transformations from real people</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            {% for testimonial in testimonials %}
+            <div class="col-lg-4">
+                <div class="testimonial-card fade-in">
+                    <p class="mb-3">"{{ testimonial.content|truncatewords:25 }}"</p>
+                    <div class="testimonial-author">
+                        - {{ testimonial.name }}
+                        {% if testimonial.age %}, Age {{ testimonial.age }}{% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Latest Tips -->
+{% if featured_tips %}
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5">
+                <h2 class="section-title">Latest Fitness Tips</h2>
+                <p class="lead text-muted">Expert advice to support your fitness journey</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            {% for tip in featured_tips %}
+            <div class="col-lg-6">
+                <div class="tip-card fade-in">
+                    <div class="tip-category">{{ tip.get_category_display }}</div>
+                    <div class="p-4">
+                        <h5>{{ tip.title }}</h5>
+                        <p class="text-muted">{{ tip.content|truncatewords:20 }}</p>
+                        <a href="{% url 'fitness:tip_detail' tip.pk %}" class="btn btn-outline-warning btn-sm">
+                            Read More <i class="fas fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-5">
+            <a href="{% url 'fitness:tips' %}" class="btn btn-outline-warning btn-lg">
+                View All Tips <i class="fas fa-arrow-right ms-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Call to Action -->
+<section class="py-5 bg-dark text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h3 class="mb-3">Ready to Start Your Transformation?</h3>
+                <p class="lead mb-0">
+                    Take the first step towards a healthier, stronger you. Let's work together to achieve your fitness goals.
+                </p>
+            </div>
+            <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+                <a href="{% url 'fitness:contact' %}" class="btn btn-warning btn-lg">
+                    <i class="fas fa-calendar-check me-2"></i>Get Started Today
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

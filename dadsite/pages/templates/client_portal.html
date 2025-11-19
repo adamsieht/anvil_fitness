@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}Client Portal - Anvil Fitness{% endblock %}
+
+{% block content %}
+<style>
+    .angle-top {
+        clip-path: polygon(0 8%, 100% 0, 100% 100%, 0 100%);
+        padding-top: 80px;
+    }
+
+    /* PT Distinction Portal Styling */
+    #ptd_portal {
+        min-height: 600px;
+        width: 100%;
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    /* Make PT Distinction responsive */
+    #ptd_portal iframe {
+        width: 100% !important;
+        min-height: 600px !important;
+    }
+</style>
+
+<!-- Page Header -->
+<section class="relative bg-section-gray py-32 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-section-gray via-gray-700 to-section-gray opacity-90"></div>
+    <div class="container mx-auto px-4 relative z-10">
+        <h1 class="text-5xl md:text-7xl font-black uppercase mb-6 text-white tracking-tight text-center">
+            <span class="text-brand-orange">Client</span> Portal
+        </h1>
+        <p class="text-2xl text-gray-300 max-w-4xl mx-auto text-center font-light">Access your workouts, nutrition plans, and track your progress</p>
+    </div>
+</section>
+
+<!-- Instructions Section -->
+<section class="relative bg-white py-12">
+    <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+            <!-- For Existing Clients -->
+            <div class="bg-gradient-to-r from-green-50 to-green-100 border-l-4 border-green-600 p-6 mb-6 rounded-r-lg">
+                <div class="flex items-start">
+                    <div class="text-green-600 text-3xl mr-4">✓</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Current Clients</h3>
+                        <p class="text-gray-700">Log in below with your PT Distinction credentials to access your personalized training program, nutrition plan, and progress tracking.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- For New Users -->
+            <div class="bg-gradient-to-r from-brand-orange/10 to-orange-100 border-l-4 border-brand-orange p-6 rounded-r-lg">
+                <div class="flex items-start">
+                    <div class="text-brand-orange text-3xl mr-4">📋</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Don't Have an Account Yet?</h3>
+                        <p class="text-gray-700 mb-4">If you're interested in starting your fitness journey with Anvil Fitness, we'd love to hear from you! Fill out our contact form and we'll get you set up with your personalized training portal.</p>
+                        <a href="{% url 'contact' %}" class="inline-block bg-brand-orange hover:bg-orange-600 text-white font-bold px-8 py-3 rounded-lg transition uppercase tracking-wide shadow-lg">
+                            Get Started →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PT Distinction Portal -->
+<section class="relative bg-section-gray angle-top">
+    <div class="container mx-auto px-4 py-20">
+        <div class="bg-white rounded-lg shadow-2xl p-8">
+            <!-- PT Distinction Embed -->
+            <script type="text/javascript">
+                var ptd_param = {};
+                ptd_param.apk = "53EG5EWBXT1823115";
+                ptd_param.domain = "https://v3portal.ptdistinction.com";
+            </script>
+            <script src="https://v3portal.ptdistinction.com/v3/inside/integration/v1/portal.js?id=de9dd06362de656c46b67fdf38dd3a24"></script>
+            <div id="ptd_portal"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Help Section -->
+<section class="relative bg-white py-12">
+    <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <h3 class="text-2xl font-bold text-dark-bg mb-4">Need Help?</h3>
+            <p class="text-gray-600 mb-6">If you're having trouble accessing your portal or have questions about your training program, don't hesitate to reach out.</p>
+            <a href="{% url 'contact' %}" class="inline-block bg-dark-bg hover:bg-gray-700 text-white font-bold px-8 py-3 rounded-lg transition uppercase tracking-wide">
+                Contact Us
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% block title %}Training Programs - Anvil Fitness{% endblock %}
+
+{% block content %}
+<style>
+    .angle-top {
+        clip-path: polygon(0 8%, 100% 0, 100% 100%, 0 100%);
+        padding-top: 80px;
+    }
+    .angle-bottom {
+        clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
+        padding-bottom: 80px;
+    }
+    .angle-both {
+        clip-path: polygon(0 8%, 100% 0, 100% 92%, 0 100%);
+        padding-top: 80px;
+        padding-bottom: 80px;
+    }
+</style>
+
+<!-- Page Header -->
+<section class="relative bg-section-gray py-32 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-section-gray via-gray-700 to-section-gray opacity-90"></div>
+    <div class="container mx-auto px-4 relative z-10">
+        <h1 class="text-5xl md:text-7xl font-black uppercase mb-6 text-white tracking-tight text-center">
+            Training <span class="text-brand-orange">Programs</span>
+        </h1>
+        <p class="text-2xl text-gray-300 max-w-4xl mx-auto text-center font-light">Choose the perfect program designed to match your goals, experience level, and lifestyle.</p>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="relative bg-white angle-both">
+    <div class="container mx-auto px-4 py-20">
+        {% if content_blocks %}
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            {% for block in content_blocks %}
+            <div class="bg-dark-bg rounded-lg overflow-hidden border border-gray-800 hover:border-brand-orange transition-all duration-500 group">
+                {% if block.image %}
+                <div class="h-80 overflow-hidden">
+                    <img src="{{ block.image.url }}" alt="{{ block.title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                </div>
+                {% endif %}
+                <div class="p-10">
+                    {% if block.title %}
+                    <h3 class="text-4xl font-black mb-6 text-white uppercase tracking-tight">
+                        <span class="text-brand-orange">▸</span> {{ block.title }}
+                    </h3>
+                    {% endif %}
+                    <div class="text-gray-300 text-lg leading-relaxed mb-8 font-light">{{ block.content|linebreaks }}</div>
+                    <a href="{% url 'contact' %}" class="inline-block bg-brand-orange hover:bg-orange-600 text-white font-bold px-10 py-4 rounded-lg transition duration-300 shadow-lg uppercase tracking-wide">
+                        LEARN MORE
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-20 bg-dark-bg rounded-lg border border-gray-800">
+            <div class="text-8xl mb-6">🏋️</div>
+            <p class="text-gray-300 text-2xl mb-6 font-light">Training programs can be added through the admin panel</p>
+            <a href="/admin" class="text-brand-orange hover:text-orange-600 font-bold uppercase tracking-wide">Go to Admin Panel →</a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="relative bg-section-gray angle-both">
+    <div class="container mx-auto px-4 py-20">
+        <h2 class="text-5xl md:text-6xl font-black text-center mb-20 text-white uppercase tracking-tight">
+            What's <span class="text-brand-orange">Included</span>
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <div class="bg-gray-900 p-10 rounded-lg border border-gray-800 hover:border-brand-orange transition-all duration-500 group">
+                <div class="text-brand-orange text-6xl mb-6 group-hover:scale-110 transition-transform duration-300">📊</div>
+                <h3 class="text-2xl font-bold mb-4 text-white uppercase tracking-wide">Progress Tracking</h3>
+                <p class="text-gray-300 leading-relaxed font-light">
+                    Detailed analytics and measurements to monitor your improvements over time.
+                </p>
+            </div>
+            <div class="bg-gray-900 p-10 rounded-lg border border-gray-800 hover:border-brand-orange transition-all duration-500 group">
+                <div class="text-brand-orange text-6xl mb-6 group-hover:scale-110 transition-transform duration-300">🍎</div>
+                <h3 class="text-2xl font-bold mb-4 text-white uppercase tracking-wide">Nutrition Guidance</h3>
+                <p class="text-gray-300 leading-relaxed font-light">
+                    Customized meal plans and nutritional advice to fuel your workouts.
+                </p>
+            </div>
+            <div class="bg-gray-900 p-10 rounded-lg border border-gray-800 hover:border-brand-orange transition-all duration-500 group">
+                <div class="text-brand-orange text-6xl mb-6 group-hover:scale-110 transition-transform duration-300">💬</div>
+                <h3 class="text-2xl font-bold mb-4 text-white uppercase tracking-wide">24/7 Support</h3>
+                <p class="text-gray-300 leading-relaxed font-light">
+                    Direct access to trainers for questions, motivation, and accountability.
+                </p>
+            </div>
+            <div class="bg-gray-900 p-10 rounded-lg border border-gray-800 hover:border-brand-orange transition-all duration-500 group">
+                <div class="text-brand-orange text-6xl mb-6 group-hover:scale-110 transition-transform duration-300">🎥</div>
+                <h3 class="text-2xl font-bold mb-4 text-white uppercase tracking-wide">Video Tutorials</h3>
+                <p class="text-gray-300 leading-relaxed font-light">
+                    Step-by-step exercise demonstrations to perfect your form.
+                </p>
+            </div>
+            <div class="bg-gray-900 p-10 rounded-lg border border-gray-800 hover:border-brand-orange transition-all duration-500 group">
+                <div class="text-brand-orange text-6xl mb-6 group-hover:scale-110 transition-transform duration-300">📱</div>
+                <h3 class="text-2xl font-bold mb-4 text-white uppercase tracking-wide">Mobile App Access</h3>
+                <p class="text-gray-300 leading-relaxed font-light">
+                    Train anywhere with our comprehensive mobile training platform.
+                </p>
+            </div>
+            <div class="bg-gray-900 p-10 rounded-lg border border-gray-800 hover:border-brand-orange transition-all duration-500 group">
+                <div class="text-brand-orange text-6xl mb-6 group-hover:scale-110 transition-transform duration-300">👥</div>
+                <h3 class="text-2xl font-bold mb-4 text-white uppercase tracking-wide">Community Access</h3>
+                <p class="text-gray-300 leading-relaxed font-light">
+                    Join a supportive community of like-minded fitness enthusiasts.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="relative bg-gradient-to-r from-brand-orange to-orange-600 text-white py-24 angle-top">
+    <div class="container mx-auto px-4 text-center">
+        <h2 class="text-5xl md:text-6xl font-black mb-8 uppercase tracking-tight">Ready to Transform?</h2>
+        <p class="text-2xl mb-12 max-w-3xl mx-auto font-light">
+            Book your free consultation today and discover which program is right for you.
+        </p>
+        <a href="{% url 'contact' %}" class="bg-dark-bg hover:bg-black text-white font-bold px-16 py-6 rounded-lg text-xl transition duration-300 shadow-2xl inline-block uppercase tracking-wide">
+            BOOK FREE CONSULTATION
+        </a>
+    </div>
+</section>
+{% endblock %}

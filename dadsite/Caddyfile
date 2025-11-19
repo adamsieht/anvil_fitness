@@ -1,0 +1,58 @@
+:80 {
+    # Handle static files
+    handle /static/* {
+        root * /app/staticfiles
+        uri strip_prefix /static
+        file_server
+    }
+
+    # Handle media files
+    handle /media/* {
+        root * /app
+        file_server
+    }
+
+    # Reverse proxy to Django
+    reverse_proxy web:8000 {
+        health_uri /health/
+        health_interval 30s
+        health_timeout 10s
+    }
+
+    # Logging
+    log {
+        output stdout
+        format console
+    }
+}
+
+# For production with a domain, replace :80 with your domain:
+# example.com {
+#     # Enable automatic HTTPS
+#
+#     # Handle static files
+#     handle /static/* {
+#         root * /app/staticfiles
+#         uri strip_prefix /static
+#         file_server
+#     }
+#
+#     # Handle media files
+#     handle /media/* {
+#         root * /app
+#         file_server
+#     }
+#
+#     # Reverse proxy to Django
+#     reverse_proxy web:8000 {
+#         health_uri /health/
+#         health_interval 30s
+#         health_timeout 10s
+#     }
+#
+#     # Logging
+#     log {
+#         output stdout
+#         format console
+#     }
+# }

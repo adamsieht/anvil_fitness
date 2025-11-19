@@ -1,0 +1,441 @@
+{% extends 'base.html' %}
+
+{% block title %}Begin Your Transformation - Anvil Fitness{% endblock %}
+
+{% block content %}
+<style>
+    /* Angular section breaks */
+    .angle-top {
+        clip-path: polygon(0 8%, 100% 0, 100% 100%, 0 100%);
+        padding-top: 80px;
+    }
+    .angle-bottom {
+        clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
+        padding-bottom: 80px;
+    }
+    .angle-both {
+        clip-path: polygon(0 8%, 100% 0, 100% 92%, 0 100%);
+        padding-top: 80px;
+        padding-bottom: 80px;
+    }
+
+    /* Custom checkbox styling */
+    input[type="checkbox"] {
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border: 2px solid #d1d5db;
+        border-radius: 4px;
+        background-color: white;
+        cursor: pointer;
+        position: relative;
+        flex-shrink: 0;
+    }
+
+    input[type="checkbox"]:checked {
+        background-color: #f97316;
+        border-color: #f97316;
+    }
+
+    input[type="checkbox"]:checked::after {
+        content: '✓';
+        position: absolute;
+        color: white;
+        font-size: 14px;
+        font-weight: bold;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    input[type="checkbox"]:hover {
+        border-color: #f97316;
+    }
+
+    input[type="checkbox"]:focus {
+        outline: 2px solid #f97316;
+        outline-offset: 2px;
+    }
+
+    /* Override ALL browser default blue colors */
+    input, textarea, select {
+        outline: none !important;
+        box-shadow: none !important;
+    }
+
+    input:focus, textarea:focus, select:focus {
+        outline: none !important;
+        box-shadow: 0 0 0 2px #f97316 !important;
+        border-color: #f97316 !important;
+    }
+
+    input:not(:focus), textarea:not(:focus), select:not(:focus) {
+        box-shadow: none !important;
+    }
+
+    /* Ensure select dropdown has white background */
+    select {
+        background-color: white !important;
+        color: black !important;
+    }
+
+    select option {
+        background-color: white !important;
+        color: black !important;
+    }
+
+    /* Remove any blue highlighting */
+    *:focus-visible {
+        outline: none !important;
+        box-shadow: none !important;
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    textarea:-webkit-autofill,
+    textarea:-webkit-autofill:hover,
+    textarea:-webkit-autofill:focus,
+    select:-webkit-autofill,
+    select:-webkit-autofill:hover,
+    select:-webkit-autofill:focus {
+        -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+        -webkit-text-fill-color: black !important;
+        border-color: #d1d5db !important;
+    }
+
+    /* Darker placeholder text */
+    input::placeholder,
+    textarea::placeholder {
+        color: #4b5563 !important;
+        opacity: 1 !important;
+    }
+
+    input::-webkit-input-placeholder,
+    textarea::-webkit-input-placeholder {
+        color: #4b5563 !important;
+        opacity: 1 !important;
+    }
+
+    input::-moz-placeholder,
+    textarea::-moz-placeholder {
+        color: #4b5563 !important;
+        opacity: 1 !important;
+    }
+
+    input:-ms-input-placeholder,
+    textarea:-ms-input-placeholder {
+        color: #4b5563 !important;
+        opacity: 1 !important;
+    }
+</style>
+
+<!-- Page Header -->
+<section class="relative bg-section-gray py-32 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-section-gray via-gray-700 to-section-gray opacity-90"></div>
+    <div class="container mx-auto px-4 relative z-10">
+        <h1 class="text-5xl md:text-7xl font-black uppercase mb-6 text-white tracking-tight text-center">
+            Begin Your <span class="text-brand-orange">Transformation</span>
+        </h1>
+        <p class="text-2xl text-gray-300 max-w-4xl mx-auto text-center font-light">Take the first step towards your fitness goals. Tell us about yourself and we'll create a personalized plan to help you succeed.</p>
+    </div>
+</section>
+
+<!-- Client Onboarding Form Section -->
+<section class="relative bg-white angle-both">
+    <div class="container mx-auto px-4 py-20">
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-dark-bg rounded-lg shadow-2xl p-8 md:p-12 border border-gray-800">
+                <h2 class="text-4xl font-black mb-6 text-white uppercase tracking-tight">
+                    <span class="text-brand-orange">▸</span> Client Onboarding
+                </h2>
+                <p class="text-gray-300 mb-10 text-lg font-light">Complete the form below so we can better understand your fitness journey and goals. We'll contact you within 24 hours to discuss your personalized training plan.</p>
+
+                <form method="post" class="space-y-8">
+                    {% csrf_token %}
+
+                    <!-- Contact Information Section -->
+                    <div class="border-l-4 border-brand-orange pl-6 mb-8">
+                        <h3 class="text-2xl font-bold text-white uppercase mb-6 tracking-wide">Contact Information</h3>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="{{ form.name.id_for_label }}" class="block text-sm font-bold text-gray-300 mb-3 uppercase tracking-wider">
+                                {{ form.name.label }}
+                            </label>
+                            {{ form.name }}
+                            {% if form.name.errors %}
+                            <p class="mt-2 text-sm text-brand-orange font-semibold">{{ form.name.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+
+                        <div>
+                            <label for="{{ form.email.id_for_label }}" class="block text-sm font-bold text-gray-300 mb-3 uppercase tracking-wider">
+                                {{ form.email.label }}
+                            </label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                            <p class="mt-2 text-sm text-brand-orange font-semibold">{{ form.email.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="{{ form.phone.id_for_label }}" class="block text-sm font-bold text-gray-300 mb-3 uppercase tracking-wider">
+                                {{ form.phone.label }}
+                            </label>
+                            {{ form.phone }}
+                            {% if form.phone.errors %}
+                            <p class="mt-2 text-sm text-brand-orange font-semibold">{{ form.phone.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+
+                        <div>
+                            <label for="{{ form.age.id_for_label }}" class="block text-sm font-bold text-gray-300 mb-3 uppercase tracking-wider">
+                                {{ form.age.label }}
+                            </label>
+                            {{ form.age }}
+                            {% if form.age.errors %}
+                            <p class="mt-2 text-sm text-brand-orange font-semibold">{{ form.age.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Fitness Assessment Section -->
+                    <div class="border-l-4 border-brand-orange pl-6 mb-8 mt-12">
+                        <h3 class="text-2xl font-bold text-white uppercase mb-6 tracking-wide">Fitness Assessment</h3>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="{{ form.fitness_level.id_for_label }}" class="block text-sm font-bold text-gray-300 mb-3 uppercase tracking-wider">
+                                {{ form.fitness_level.label }}
+                            </label>
+                            {{ form.fitness_level }}
+                            {% if form.fitness_level.errors %}
+                            <p class="mt-2 text-sm text-brand-orange font-semibold">{{ form.fitness_level.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+
+                        <div>
+                            <label for="{{ form.current_frequency.id_for_label }}" class="block text-sm font-bold text-gray-300 mb-3 uppercase tracking-wider">
+                                {{ form.current_frequency.label }}
+                            </label>
+                            {{ form.current_frequency }}
+                            {% if form.current_frequency.errors %}
+                            <p class="mt-2 text-sm text-brand-orange font-semibold">{{ form.current_frequency.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold text-gray-300 mb-4 uppercase tracking-wider">
+                            {{ form.fitness_goals.label }} *
+                        </label>
+                        <div class="bg-white border-2 border-gray-300 rounded-lg p-6">
+                            {% for choice in form.fitness_goals %}
+                            <div class="flex items-center mb-4 last:mb-0">
+                                <label class="flex items-center cursor-pointer text-black hover:text-brand-orange transition font-light text-lg">
+                                    {{ choice.tag }}
+                                    <span class="ml-3">{{ choice.choice_label }}</span>
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% if form.fitness_goals.errors %}
+                        <p class="mt-2 text-sm text-brand-orange font-semibold">{{ form.fitness_goals.errors.0 }}</p>
+                        {% endif %}
+                        <p class="mt-3 text-sm text-gray-400 font-light">Select all that apply to your fitness journey</p>
+                    </div>
+
+                    <div>
+                        <label for="{{ form.additional_goals.id_for_label }}" class="block text-sm font-bold text-gray-300 mb-3 uppercase tracking-wider">
+                            {{ form.additional_goals.label }}
+                        </label>
+                        {{ form.additional_goals }}
+                        {% if form.additional_goals.errors %}
+                        <p class="mt-2 text-sm text-brand-orange font-semibold">{{ form.additional_goals.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Health Information Section -->
+                    <div class="border-l-4 border-brand-orange pl-6 mb-8 mt-12">
+                        <h3 class="text-2xl font-bold text-white uppercase mb-6 tracking-wide">Health Information</h3>
+                    </div>
+
+                    <div>
+                        <label for="{{ form.injuries_limitations.id_for_label }}" class="block text-sm font-bold text-gray-300 mb-3 uppercase tracking-wider">
+                            {{ form.injuries_limitations.label }}
+                        </label>
+                        {{ form.injuries_limitations }}
+                        {% if form.injuries_limitations.errors %}
+                        <p class="mt-2 text-sm text-brand-orange font-semibold">{{ form.injuries_limitations.errors.0 }}</p>
+                        {% endif %}
+                        <p class="mt-3 text-sm text-gray-400 font-light">This information helps us design a safe and effective training program for you.</p>
+                    </div>
+
+                    <!-- Additional Information Section -->
+                    <div class="border-l-4 border-brand-orange pl-6 mb-8 mt-12">
+                        <h3 class="text-2xl font-bold text-white uppercase mb-6 tracking-wide">Tell Us More</h3>
+                    </div>
+
+                    <div>
+                        <label for="{{ form.message.id_for_label }}" class="block text-sm font-bold text-gray-300 mb-3 uppercase tracking-wider">
+                            {{ form.message.label }}
+                        </label>
+                        {{ form.message }}
+                        {% if form.message.errors %}
+                        <p class="mt-2 text-sm text-brand-orange font-semibold">{{ form.message.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <label for="{{ form.referral_source.id_for_label }}" class="block text-sm font-bold text-gray-300 mb-3 uppercase tracking-wider">
+                            {{ form.referral_source.label }}
+                        </label>
+                        {{ form.referral_source }}
+                        {% if form.referral_source.errors %}
+                        <p class="mt-2 text-sm text-brand-orange font-semibold">{{ form.referral_source.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="mt-12">
+                        <button type="submit" class="w-full bg-brand-orange hover:bg-orange-600 text-white font-bold py-5 px-10 rounded-lg text-xl uppercase tracking-wider transition duration-300 shadow-2xl">
+                            Start My Transformation →
+                        </button>
+                        <p class="text-center text-gray-400 text-sm mt-6 font-light">We'll contact you within 24 hours to schedule your consultation</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Info Section -->
+<section class="relative bg-section-gray angle-both">
+    <div class="container mx-auto px-4 py-20">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-5xl font-black text-center mb-16 text-white uppercase tracking-tight">
+                Other Ways to <span class="text-brand-orange">Connect</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div class="bg-gray-900 p-10 rounded-lg text-center border border-gray-800 hover:border-brand-orange transition-all duration-500">
+                    <div class="text-6xl mb-6">📍</div>
+                    <h3 class="text-xl font-bold text-white mb-3 uppercase tracking-wide">Visit Us</h3>
+                    <p class="text-gray-300 font-light">
+                        Schedule a tour of our facility
+                    </p>
+                </div>
+                <div class="bg-gray-900 p-10 rounded-lg text-center border border-gray-800 hover:border-brand-orange transition-all duration-500">
+                    <div class="text-6xl mb-6">📞</div>
+                    <h3 class="text-xl font-bold text-white mb-3 uppercase tracking-wide">Call Us</h3>
+                    <p class="text-gray-300 font-light">
+                        Speak with a trainer directly
+                    </p>
+                </div>
+                <div class="bg-gray-900 p-10 rounded-lg text-center border border-gray-800 hover:border-brand-orange transition-all duration-500">
+                    <div class="text-6xl mb-6">💬</div>
+                    <h3 class="text-xl font-bold text-white mb-3 uppercase tracking-wide">Follow Us</h3>
+                    <p class="text-gray-300 font-light">
+                        Join our social community
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="relative bg-white angle-both">
+    <div class="container mx-auto px-4 py-20">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-5xl font-black text-center mb-16 text-dark-bg uppercase tracking-tight">
+                Frequently Asked <span class="text-brand-orange">Questions</span>
+            </h2>
+            <div class="space-y-6">
+                <div class="bg-dark-bg p-8 rounded-lg border border-gray-800 hover:border-brand-orange transition-all duration-500">
+                    <h3 class="text-2xl font-bold text-white mb-4 uppercase tracking-wide">Do you offer free consultations?</h3>
+                    <p class="text-gray-300 font-light text-lg">Yes! We offer complimentary consultations to discuss your goals and find the right program for you.</p>
+                </div>
+                <div class="bg-dark-bg p-8 rounded-lg border border-gray-800 hover:border-brand-orange transition-all duration-500">
+                    <h3 class="text-2xl font-bold text-white mb-4 uppercase tracking-wide">What should I bring to my first session?</h3>
+                    <p class="text-gray-300 font-light text-lg">Just bring comfortable workout clothes, athletic shoes, a water bottle, and your determination!</p>
+                </div>
+                <div class="bg-dark-bg p-8 rounded-lg border border-gray-800 hover:border-brand-orange transition-all duration-500">
+                    <h3 class="text-2xl font-bold text-white mb-4 uppercase tracking-wide">Can I try before committing?</h3>
+                    <p class="text-gray-300 font-light text-lg">Absolutely! We offer trial sessions so you can experience our training style before making a commitment.</p>
+                </div>
+                <div class="bg-dark-bg p-8 rounded-lg border border-gray-800 hover:border-brand-orange transition-all duration-500">
+                    <h3 class="text-2xl font-bold text-white mb-4 uppercase tracking-wide">Is personal training right for beginners?</h3>
+                    <p class="text-gray-300 font-light text-lg">Definitely! Personal training is perfect for beginners as it ensures you learn proper form and build confidence safely.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="relative bg-gradient-to-r from-brand-orange to-orange-600 text-white py-24 angle-top">
+    <div class="container mx-auto px-4 text-center">
+        <h2 class="text-5xl md:text-6xl font-black mb-8 uppercase tracking-tight">Your Journey Starts Here</h2>
+        <p class="text-2xl mb-12 max-w-3xl mx-auto font-light">
+            Don't let another day go by. Make the decision to invest in yourself today.
+        </p>
+        <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="bg-dark-bg hover:bg-black text-white font-bold px-16 py-6 rounded-lg text-xl transition duration-300 shadow-2xl inline-block uppercase tracking-wide">
+            FILL OUT FORM ABOVE
+        </a>
+    </div>
+</section>
+
+<script>
+    // Phone number auto-formatting
+    document.addEventListener('DOMContentLoaded', function() {
+        const phoneInput = document.getElementById('id_phone');
+
+        if (phoneInput) {
+            phoneInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, ''); // Remove all non-digits
+                let formattedValue = '';
+
+                if (value.length > 0) {
+                    // Format: (XXX) XXX-XXXX
+                    if (value.length <= 3) {
+                        formattedValue = '(' + value;
+                    } else if (value.length <= 6) {
+                        formattedValue = '(' + value.slice(0, 3) + ') ' + value.slice(3);
+                    } else {
+                        formattedValue = '(' + value.slice(0, 3) + ') ' + value.slice(3, 6) + '-' + value.slice(6, 10);
+                    }
+                }
+
+                e.target.value = formattedValue;
+            });
+
+            // Allow backspace to work naturally
+            phoneInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Backspace' || e.key === 'Delete') {
+                    // Let the default behavior happen, then reformat
+                    setTimeout(() => {
+                        let value = e.target.value.replace(/\D/g, '');
+                        let formattedValue = '';
+
+                        if (value.length > 0) {
+                            if (value.length <= 3) {
+                                formattedValue = '(' + value;
+                            } else if (value.length <= 6) {
+                                formattedValue = '(' + value.slice(0, 3) + ') ' + value.slice(3);
+                            } else {
+                                formattedValue = '(' + value.slice(0, 3) + ') ' + value.slice(3, 6) + '-' + value.slice(6, 10);
+                            }
+                        }
+
+                        e.target.value = formattedValue;
+                    }, 0);
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

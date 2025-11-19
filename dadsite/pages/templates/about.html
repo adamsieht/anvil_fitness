@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block title %}About Us - Anvil Fitness{% endblock %}
+
+{% block content %}
+<style>
+    .angle-top {
+        clip-path: polygon(0 8%, 100% 0, 100% 100%, 0 100%);
+        padding-top: 80px;
+    }
+    .angle-bottom {
+        clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
+        padding-bottom: 80px;
+    }
+    .angle-both {
+        clip-path: polygon(0 8%, 100% 0, 100% 92%, 0 100%);
+        padding-top: 80px;
+        padding-bottom: 80px;
+    }
+</style>
+
+<!-- Page Header -->
+<section class="relative bg-section-gray py-32 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-section-gray via-gray-700 to-section-gray opacity-90"></div>
+    <div class="container mx-auto px-4 relative z-10">
+        <h1 class="text-5xl md:text-7xl font-black uppercase mb-6 text-white tracking-tight text-center">
+            About <span class="text-brand-orange">Anvil Fitness</span>
+        </h1>
+        <p class="text-2xl text-gray-300 max-w-4xl mx-auto text-center font-light">Our mission is to forge champions through dedication, discipline, and proven training methods.</p>
+    </div>
+</section>
+
+<!-- Content Blocks Section -->
+<section class="relative bg-white angle-both">
+    <div class="container mx-auto px-4 py-20">
+        {% if content_blocks %}
+        <div class="space-y-24">
+            {% for block in content_blocks %}
+            <div class="{% cycle 'flex flex-col lg:flex-row' 'flex flex-col lg:flex-row-reverse' %} gap-12 items-center">
+                {% if block.image %}
+                <div class="lg:w-1/2">
+                    <img src="{{ block.image.url }}" alt="{{ block.title }}" class="w-full rounded-lg shadow-2xl border-4 border-brand-orange">
+                </div>
+                {% endif %}
+                <div class="{% if block.image %}lg:w-1/2{% else %}w-full{% endif %}">
+                    {% if block.title %}
+                    <h2 class="text-4xl md:text-5xl font-black mb-8 text-dark-bg uppercase tracking-tight">
+                        <span class="text-brand-orange">▸</span> {{ block.title }}
+                    </h2>
+                    {% endif %}
+                    <div class="text-gray-700 text-lg leading-relaxed space-y-6 font-light">{{ block.content|linebreaks }}</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-20 bg-dark-bg rounded-lg border border-gray-800">
+            <div class="text-8xl mb-6">📝</div>
+            <p class="text-gray-300 text-2xl mb-6 font-light">Content can be added through the admin panel</p>
+            <a href="/admin" class="text-brand-orange hover:text-orange-600 font-bold uppercase tracking-wide">Go to Admin Panel →</a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Our Values Section -->
+<section class="relative bg-section-gray angle-both">
+    <div class="container mx-auto px-4 py-20">
+        <h2 class="text-5xl md:text-6xl font-black text-center mb-20 text-white uppercase tracking-tight">
+            Our <span class="text-brand-orange">Core Values</span>
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+            <div class="bg-gray-900 p-10 rounded-lg text-center border border-gray-800 hover:border-brand-orange transition-all duration-500 group">
+                <div class="text-6xl mb-6 group-hover:scale-110 transition-transform duration-300">🔥</div>
+                <h3 class="text-2xl font-bold text-white mb-4 uppercase tracking-wide">Intensity</h3>
+                <p class="text-gray-300 font-light">Maximum effort, maximum results</p>
+            </div>
+            <div class="bg-gray-900 p-10 rounded-lg text-center border border-gray-800 hover:border-brand-orange transition-all duration-500 group">
+                <div class="text-6xl mb-6 group-hover:scale-110 transition-transform duration-300">🎖️</div>
+                <h3 class="text-2xl font-bold text-white mb-4 uppercase tracking-wide">Discipline</h3>
+                <p class="text-gray-300 font-light">Consistency breeds excellence</p>
+            </div>
+            <div class="bg-gray-900 p-10 rounded-lg text-center border border-gray-800 hover:border-brand-orange transition-all duration-500 group">
+                <div class="text-6xl mb-6 group-hover:scale-110 transition-transform duration-300">🤝</div>
+                <h3 class="text-2xl font-bold text-white mb-4 uppercase tracking-wide">Community</h3>
+                <p class="text-gray-300 font-light">Together we achieve more</p>
+            </div>
+            <div class="bg-gray-900 p-10 rounded-lg text-center border border-gray-800 hover:border-brand-orange transition-all duration-500 group">
+                <div class="text-6xl mb-6 group-hover:scale-110 transition-transform duration-300">⚡</div>
+                <h3 class="text-2xl font-bold text-white mb-4 uppercase tracking-wide">Innovation</h3>
+                <p class="text-gray-300 font-light">Cutting-edge training methods</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="relative bg-gradient-to-r from-brand-orange to-orange-600 text-white py-24 angle-top">
+    <div class="container mx-auto px-4 text-center">
+        <h2 class="text-5xl md:text-6xl font-black mb-8 uppercase tracking-tight">Join the Anvil Family</h2>
+        <p class="text-2xl mb-12 max-w-3xl mx-auto font-light">
+            Experience the difference that professional training and a supportive community can make.
+        </p>
+        <a href="{% url 'contact' %}" class="bg-dark-bg hover:bg-black text-white font-bold px-16 py-6 rounded-lg text-xl transition duration-300 shadow-2xl inline-block uppercase tracking-wide">
+            GET STARTED TODAY
+        </a>
+    </div>
+</section>
+{% endblock %}

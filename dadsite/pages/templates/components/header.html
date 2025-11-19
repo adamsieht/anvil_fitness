@@ -1,0 +1,46 @@
+{% load static %}
+<header class="bg-dark-bg border-b border-gray-800">
+    <div class="container mx-auto px-4 py-4">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <a href="{% url 'home' %}" class="hover:opacity-80 transition duration-300">
+                    <img src="{% static 'images/anvil_without_background.png' %}" alt="Anvil Fitness Logo" class="h-16 md:h-20 w-auto">
+                </a>
+                <div>
+                    <h1 class="text-3xl md:text-4xl font-bold text-white tracking-tight">
+                        <a href="{% url 'home' %}" class="hover:text-brand-orange transition duration-300">
+                            <span class="text-brand-orange">ANVIL</span> FITNESS
+                        </a>
+                    </h1>
+                    <p class="text-gray-400 mt-1 text-xs font-medium uppercase tracking-widest">Forge Your Strength</p>
+                </div>
+            </div>
+
+            <!-- Navigation Items -->
+            <nav class="hidden lg:flex items-center gap-1">
+                <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}text-brand-orange{% else %}text-gray-300 hover:text-brand-orange{% endif %} px-5 py-2 font-semibold uppercase text-sm tracking-wide transition duration-300">
+                    Home
+                </a>
+                <a href="{% url 'about' %}" class="{% if request.resolver_match.url_name == 'about' %}text-brand-orange{% else %}text-gray-300 hover:text-brand-orange{% endif %} px-5 py-2 font-semibold uppercase text-sm tracking-wide transition duration-300">
+                    About
+                </a>
+                <a href="{% url 'services' %}" class="{% if request.resolver_match.url_name == 'services' %}text-brand-orange{% else %}text-gray-300 hover:text-brand-orange{% endif %} px-5 py-2 font-semibold uppercase text-sm tracking-wide transition duration-300">
+                    Programs
+                </a>
+                <a href="{% url 'client_portal' %}" class="{% if request.resolver_match.url_name == 'client_portal' %}text-brand-orange{% else %}text-gray-300 hover:text-brand-orange{% endif %} px-5 py-2 font-semibold uppercase text-sm tracking-wide transition duration-300">
+                    Client Portal
+                </a>
+                <a href="{% url 'contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}text-brand-orange{% else %}text-gray-300 hover:text-brand-orange{% endif %} px-5 py-2 font-semibold uppercase text-sm tracking-wide transition duration-300">
+                    Contact
+                </a>
+            </nav>
+
+            <!-- Start Today Button -->
+            <div class="hidden md:flex items-center gap-4">
+                <a href="{% url 'contact' %}" class="bg-brand-orange hover:bg-orange-600 text-white font-bold px-8 py-3 rounded transition duration-300 shadow-lg uppercase text-sm tracking-wide">
+                    START TODAY
+                </a>
+            </div>
+        </div>
+    </div>
+</header>

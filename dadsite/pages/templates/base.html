@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Anvil Fitness - Forge Your Strength{% endblock %}</title>
+    <meta name="description" content="{% block description %}Professional fitness training and personalized programs{% endblock %}">
+
+    <!-- Google Fonts - Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Montserrat', 'sans-serif'],
+                    },
+                    colors: {
+                        'brand-orange': '#f97316',
+                        'dark-bg': '#1e1d1d',
+                        'section-gray': '#353535',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e1d1d;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #f97316;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ea580c;
+        }
+    </style>
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="flex flex-col min-h-screen bg-dark-bg font-sans">
+    {% include 'components/header.html' %}
+
+    <main class="flex-grow">
+        <!-- Messages -->
+        {% if messages %}
+        <div class="container mx-auto px-4 py-4">
+            {% for message in messages %}
+            <div class="{% if message.tags == 'success' %}bg-green-900 border-green-500 text-green-200{% elif message.tags == 'error' %}bg-red-900 border-red-500 text-red-200{% else %}bg-orange-900 border-orange-500 text-orange-200{% endif %} border px-4 py-3 rounded mb-4" role="alert">
+                <p class="font-semibold">{{ message }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    {% include 'components/footer.html' %}
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

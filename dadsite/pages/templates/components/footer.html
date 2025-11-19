@@ -1,0 +1,31 @@
+{% load static %}
+<footer class="bg-black text-white mt-auto border-t border-gray-900">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Main footer row -->
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-6">
+            <!-- Logo and brand -->
+            <div class="flex items-center gap-3">
+                <img src="{% static 'images/anvil_without_background.png' %}" alt="Anvil Fitness Logo" class="h-12 w-auto">
+                <span class="text-2xl font-bold uppercase tracking-tight"><span class="text-brand-orange">ANVIL</span> FITNESS</span>
+            </div>
+
+            <!-- Navigation links -->
+            <nav class="flex flex-wrap items-center gap-8">
+                <a href="{% url 'home' %}" class="text-gray-400 hover:text-brand-orange transition duration-300 uppercase text-sm font-semibold tracking-wide">Home</a>
+                <a href="{% url 'about' %}" class="text-gray-400 hover:text-brand-orange transition duration-300 uppercase text-sm font-semibold tracking-wide">About</a>
+                <a href="{% url 'services' %}" class="text-gray-400 hover:text-brand-orange transition duration-300 uppercase text-sm font-semibold tracking-wide">Programs</a>
+                <a href="{% url 'contact' %}" class="text-gray-400 hover:text-brand-orange transition duration-300 uppercase text-sm font-semibold tracking-wide">Contact</a>
+            </nav>
+
+            <!-- CTA Button -->
+            <a href="{% url 'contact' %}" class="bg-brand-orange hover:bg-orange-600 text-white font-bold px-8 py-3 rounded transition duration-300 text-center whitespace-nowrap uppercase text-sm tracking-wide shadow-lg">
+                Book Consultation
+            </a>
+        </div>
+
+        <!-- Copyright -->
+        <div class="text-center md:text-left border-t border-gray-900 pt-6">
+            <p class="text-gray-500 text-sm font-light">&copy; {% now "Y" %} Anvil Fitness. All rights reserved.</p>
+        </div>
+    </div>
+</footer>

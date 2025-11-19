@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block title %}Pending Inquiries - Admin{% endblock %}
+
+{% block content %}
+<style>
+    .angle-top {
+        clip-path: polygon(0 8%, 100% 0, 100% 100%, 0 100%);
+        padding-top: 80px;
+    }
+</style>
+
+<!-- Page Header -->
+<section class="relative bg-section-gray py-32 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-section-gray via-gray-700 to-section-gray opacity-90"></div>
+    <div class="container mx-auto px-4 relative z-10">
+        <h1 class="text-5xl md:text-7xl font-black uppercase mb-6 text-white tracking-tight text-center">
+            <span class="text-brand-orange">Pending</span> Inquiries
+        </h1>
+        <p class="text-2xl text-gray-300 max-w-4xl mx-auto text-center font-light">Review and approve new client submissions</p>
+    </div>
+</section>
+
+<!-- Admin Navigation -->
+<section class="relative bg-white py-12">
+    <div class="container mx-auto px-4">
+        <!-- Navigation Tabs -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-dark-bg mb-4 uppercase tracking-wide">Admin Dashboard</h2>
+            <div class="flex flex-wrap gap-4">
+                <div class="flex-1 min-w-[250px] bg-gradient-to-r from-brand-orange to-orange-600 p-6 rounded-lg border-4 border-brand-orange shadow-xl">
+                    <div class="text-white text-4xl mb-2">📋</div>
+                    <h3 class="text-white text-2xl font-bold mb-1">Pending Inquiries</h3>
+                    <p class="text-orange-100 font-semibold">Currently viewing</p>
+                    <div class="mt-3 text-white text-3xl font-black">{{ total_pending }}</div>
+                </div>
+                <a href="{% url 'admin_active_clients' %}" class="flex-1 min-w-[250px] bg-dark-bg p-6 rounded-lg border-2 border-gray-700 hover:border-brand-orange transition-all hover:shadow-xl group">
+                    <div class="text-green-400 text-4xl mb-2 group-hover:scale-110 transition-transform">👥</div>
+                    <h3 class="text-white text-2xl font-bold mb-1">Active Clients</h3>
+                    <p class="text-gray-400 group-hover:text-brand-orange transition">View all clients →</p>
+                </a>
+                <a href="/admin" class="flex-1 min-w-[250px] bg-dark-bg p-6 rounded-lg border-2 border-gray-700 hover:border-brand-orange transition-all hover:shadow-xl group">
+                    <div class="text-blue-400 text-4xl mb-2 group-hover:scale-110 transition-transform">⚙️</div>
+                    <h3 class="text-white text-2xl font-bold mb-1">Django Admin</h3>
+                    <p class="text-gray-400 group-hover:text-brand-orange transition">Full admin panel →</p>
+                </a>
+                <a href="/" class="flex-1 min-w-[250px] bg-dark-bg p-6 rounded-lg border-2 border-gray-700 hover:border-brand-orange transition-all hover:shadow-xl group">
+                    <div class="text-purple-400 text-4xl mb-2 group-hover:scale-110 transition-transform">🏠</div>
+                    <h3 class="text-white text-2xl font-bold mb-1">Public Site</h3>
+                    <p class="text-gray-400 group-hover:text-brand-orange transition">Back to website →</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pending Inquiries List -->
+<section class="relative bg-section-gray angle-top">
+    <div class="container mx-auto px-4 py-20">
+        {% if inquiries %}
+        <div class="space-y-6">
+            {% for inquiry in inquiries %}
+            <div class="bg-white rounded-lg shadow-xl p-8 border-2 border-gray-300">
+                <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
+                    <!-- Client Info -->
+                    <div class="flex-1">
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <h3 class="text-3xl font-black text-dark-bg uppercase tracking-tight mb-2">
+                                    {{ inquiry.name }}
+                                </h3>
+                                <p class="text-gray-600 text-sm">Submitted: {{ inquiry.submitted_at|date:"F d, Y \a\t g:i A" }}</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                            <div>
+                                <p class="text-sm font-bold text-gray-700 uppercase tracking-wide">Email</p>
+                                <p class="text-gray-900">{{ inquiry.email }}</p>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-gray-700 uppercase tracking-wide">Phone</p>
+                                <p class="text-gray-900">{{ inquiry.phone|default:"Not provided" }}</p>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-gray-700 uppercase tracking-wide">Age</p>
+                                <p class="text-gray-900">{{ inquiry.age|default:"Not provided" }}</p>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-gray-700 uppercase tracking-wide">Fitness Level</p>
+                                <p class="text-gray-900">{{ inquiry.get_fitness_level_display }}</p>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <p class="text-sm font-bold text-gray-700 uppercase tracking-wide mb-2">Fitness Goals</p>
+                            <div class="flex flex-wrap gap-2">
+                                {% for goal in inquiry.get_fitness_goals_list %}
+                                <span class="bg-brand-orange text-white px-3 py-1 rounded text-sm font-semibold">{{ goal }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        {% if inquiry.message %}
+                        <div class="mb-4">
+                            <p class="text-sm font-bold text-gray-700 uppercase tracking-wide mb-2">Message</p>
+                            <p class="text-gray-900">{{ inquiry.message }}</p>
+                        </div>
+                        {% endif %}
+
+                        {% if inquiry.injuries_limitations %}
+                        <div class="mb-4">
+                            <p class="text-sm font-bold text-gray-700 uppercase tracking-wide mb-2">Injuries/Limitations</p>
+                            <p class="text-gray-900">{{ inquiry.injuries_limitations }}</p>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="lg:w-64 flex lg:flex-col gap-4">
+                        <form method="post" action="{% url 'approve_inquiry' inquiry.id %}" class="flex-1">
+                            {% csrf_token %}
+                            <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg text-lg transition shadow-lg uppercase tracking-wide">
+                                ✅ Approve
+                            </button>
+                        </form>
+                        <form method="post" action="{% url 'deny_inquiry' inquiry.id %}" class="flex-1">
+                            {% csrf_token %}
+                            <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-6 rounded-lg text-lg transition shadow-lg uppercase tracking-wide" onclick="return confirm('Mark this inquiry as spam?');">
+                                ❌ Deny
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="bg-white rounded-lg shadow-xl p-12 text-center">
+            <div class="text-8xl mb-6">🎉</div>
+            <h3 class="text-3xl font-bold text-dark-bg mb-4">No Pending Inquiries</h3>
+            <p class="text-gray-600 text-lg">All client submissions have been reviewed!</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,260 @@
+{% extends 'base.html' %}
+
+{% block title %}Fitness Tips - Anvil Fitness{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="py-5 bg-dark text-white">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold mb-4">
+                    Fitness <span class="text-warning">Tips & Insights</span>
+                </h1>
+                <p class="lead">
+                    Expert advice, practical tips, and motivation to support your fitness journey. 
+                    Everything you need to stay informed, inspired, and on track.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Filter Categories -->
+<section class="py-4 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="d-flex flex-wrap gap-2 justify-content-center">
+                    <a href="{% url 'fitness:tips' %}" class="btn btn-outline-warning btn-sm">All Tips</a>
+                    <a href="{% url 'fitness:tips' %}?category=exercise" class="btn btn-outline-warning btn-sm">Exercise</a>
+                    <a href="{% url 'fitness:tips' %}?category=nutrition" class="btn btn-outline-warning btn-sm">Nutrition</a>
+                    <a href="{% url 'fitness:tips' %}?category=wellness" class="btn btn-outline-warning btn-sm">Wellness</a>
+                    <a href="{% url 'fitness:tips' %}?category=motivation" class="btn btn-outline-warning btn-sm">Motivation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Tips Grid -->
+<section class="py-5">
+    <div class="container">
+        {% if tips %}
+        <div class="row g-4">
+            {% for tip in tips %}
+            <div class="col-lg-4 col-md-6">
+                <div class="tip-card fade-in">
+                    <div class="tip-category">{{ tip.get_category_display }}</div>
+                    <div class="p-4">
+                        <h5>{{ tip.title }}</h5>
+                        <p class="text-muted">{{ tip.content|truncatewords:25 }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">{{ tip.created_at|date:"M d, Y" }}</small>
+                            <a href="{% url 'fitness:tip_detail' tip.pk %}" class="btn btn-outline-warning btn-sm">
+                                Read More <i class="fas fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if is_paginated %}
+        <nav aria-label="Tips pagination" class="mt-5">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">First</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">Previous</a>
+                    </li>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <li class="page-item active">
+                            <span class="page-link">{{ num }}</span>
+                        </li>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ num }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">{{ num }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">Next</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">Last</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+        
+        {% else %}
+        <!-- Empty State -->
+        <div class="row justify-content-center">
+            <div class="col-lg-6 text-center">
+                <i class="fas fa-lightbulb fa-4x text-warning mb-4"></i>
+                <h3>Tips Coming Soon!</h3>
+                <p class="lead text-muted mb-4">
+                    I'm preparing valuable fitness tips and insights for adults over 40. 
+                    Check back soon or contact me directly for personalized advice.
+                </p>
+                <a href="{% url 'fitness:contact' %}" class="btn btn-warning">
+                    <i class="fas fa-comments me-2"></i>Get Personal Advice
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Sample Tips (Static Content for Demo) -->
+{% if not tips %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5">
+                <h2 class="section-title">Sample Fitness Tips</h2>
+                <p class="lead text-muted">A preview of the expert advice you'll receive</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="tip-card fade-in">
+                    <div class="tip-category">Exercise</div>
+                    <div class="p-4">
+                        <h5>Start with Compound Movements</h5>
+                        <p class="text-muted">
+                            Focus on exercises that work multiple muscle groups like squats, deadlifts, and push-ups. 
+                            These movements give you the most bang for your buck, especially when time is limited.
+                        </p>
+                        <small class="text-muted">Jan 15, 2025</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="tip-card fade-in">
+                    <div class="tip-category">Nutrition</div>
+                    <div class="p-4">
+                        <h5>Protein at Every Meal</h5>
+                        <p class="text-muted">
+                            Adults over 40 need more protein to maintain muscle mass. Aim for 20-30g of protein 
+                            at each meal to support recovery and keep you feeling satisfied longer.
+                        </p>
+                        <small class="text-muted">Jan 12, 2025</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="tip-card fade-in">
+                    <div class="tip-category">Wellness</div>
+                    <div class="p-4">
+                        <h5>Prioritize Sleep Quality</h5>
+                        <p class="text-muted">
+                            Quality sleep is crucial for recovery, hormone balance, and weight management. 
+                            Aim for 7-9 hours and create a consistent bedtime routine.
+                        </p>
+                        <small class="text-muted">Jan 10, 2025</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="tip-card fade-in">
+                    <div class="tip-category">Motivation</div>
+                    <div class="p-4">
+                        <h5>Progress Over Perfection</h5>
+                        <p class="text-muted">
+                            Don't aim for perfect workouts or perfect nutrition. Consistency in small, 
+                            manageable steps will always beat sporadic bursts of perfection.
+                        </p>
+                        <small class="text-muted">Jan 8, 2025</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="tip-card fade-in">
+                    <div class="tip-category">Exercise</div>
+                    <div class="p-4">
+                        <h5>Listen to Your Body</h5>
+                        <p class="text-muted">
+                            Recovery becomes more important as we age. If you're feeling overly fatigued, 
+                            take a rest day or do some light movement instead of pushing through.
+                        </p>
+                        <small class="text-muted">Jan 5, 2025</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="tip-card fade-in">
+                    <div class="tip-category">Wellness</div>
+                    <div class="p-4">
+                        <h5>Hydration Matters More</h5>
+                        <p class="text-muted">
+                            As we age, our sense of thirst diminishes. Make hydration a priority by 
+                            keeping water visible and setting reminders throughout the day.
+                        </p>
+                        <small class="text-muted">Jan 3, 2025</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Newsletter Signup -->
+<section class="py-5 bg-dark text-white">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h3 class="mb-4">Stay Updated with Weekly Tips</h3>
+                <p class="lead mb-4">
+                    Get the latest fitness tips, nutrition advice, and motivation delivered to your inbox every week.
+                </p>
+                <form class="row g-3 justify-content-center">
+                    <div class="col-md-6">
+                        <input type="email" class="form-control form-control-lg" placeholder="Enter your email address">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-warning btn-lg">
+                            <i class="fas fa-paper-plane me-2"></i>Subscribe
+                        </button>
+                    </div>
+                </form>
+                <small class="text-white-50 mt-3 d-block">
+                    No spam, unsubscribe anytime. Your email is safe with us.
+                </small>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h3 class="mb-3">Need Personalized Advice?</h3>
+                <p class="lead mb-0">
+                    These tips are just the beginning. Get customized guidance that addresses your specific 
+                    goals, challenges, and lifestyle through personalized training.
+                </p>
+            </div>
+            <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+                <a href="{% url 'fitness:contact' %}" class="btn btn-warning btn-lg">
+                    <i class="fas fa-user-cog me-2"></i>Get Personal Coaching
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

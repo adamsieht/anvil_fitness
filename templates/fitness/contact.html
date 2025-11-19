@@ -1,0 +1,294 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact - Anvil Fitness{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="py-5 bg-dark text-white">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold mb-4">
+                    Let's Start Your <span class="text-warning">Fitness Journey</span>
+                </h1>
+                <p class="lead">
+                    Ready to transform your health and discover your strength? I'm here to help you every step of the way. 
+                    Reach out through your preferred fitness app or use the form below.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Methods -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5">
+                <h2 class="section-title">Get In Touch</h2>
+                <p class="lead text-muted">Multiple ways to connect and start your transformation</p>
+            </div>
+        </div>
+        <div class="row g-4 mb-5">
+            <div class="col-lg-4">
+                <div class="card h-100 text-center fade-in">
+                    <div class="card-body p-4">
+                        <i class="fas fa-mobile-alt fa-3x text-warning mb-3"></i>
+                        <h5>Your Current App</h5>
+                        <p class="mb-4">Keep using the fitness app you love! Just reach out to me through your existing platform for personalized guidance.</p>
+                        <div class="text-muted">
+                            <small>Most popular apps supported:<br>
+                            MyFitnessPal • Strava • Nike Training • Apple Fitness • Fitbit</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card h-100 text-center fade-in">
+                    <div class="card-body p-4">
+                        <i class="fas fa-phone fa-3x text-warning mb-3"></i>
+                        <h5>Call or Text</h5>
+                        <p class="mb-4">Prefer to talk? Give me a call or send a text message. I typically respond within 2-4 hours during business hours.</p>
+                        <a href="tel:+15551234567" class="btn btn-outline-warning">
+                            <i class="fas fa-phone me-2"></i>(555) 123-4567
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card h-100 text-center fade-in">
+                    <div class="card-body p-4">
+                        <i class="fas fa-envelope fa-3x text-warning mb-3"></i>
+                        <h5>Email</h5>
+                        <p class="mb-4">Send me an email with any questions or to schedule your initial consultation. I'll get back to you within 24 hours.</p>
+                        <a href="mailto:info@anvilfitness.com" class="btn btn-outline-warning">
+                            <i class="fas fa-envelope me-2"></i>info@anvilfitness.com
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Form -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="contact-form">
+                    <h2 class="text-center mb-4">Send Me a Message</h2>
+                    <p class="text-center text-muted mb-5">
+                        Fill out the form below and I'll get back to you within 24 hours with a personalized response.
+                    </p>
+                    
+                    <form id="contactForm" action="#" method="post">
+                        {% csrf_token %}
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label for="firstName" class="form-label">First Name *</label>
+                                <input type="text" class="form-control" id="firstName" name="first_name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lastName" class="form-label">Last Name *</label>
+                                <input type="text" class="form-control" id="lastName" name="last_name" required>
+                            </div>
+                        </div>
+                        
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">Email Address *</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="phone" class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" id="phone" name="phone">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="age" class="form-label">Age Range</label>
+                            <select class="form-control" id="age" name="age">
+                                <option value="">Select your age range</option>
+                                <option value="35-40">35-40</option>
+                                <option value="40-45">40-45</option>
+                                <option value="45-50">45-50</option>
+                                <option value="50-55">50-55</option>
+                                <option value="55-60">55-60</option>
+                                <option value="60+">60+</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="fitnessLevel" class="form-label">Current Fitness Level</label>
+                            <select class="form-control" id="fitnessLevel" name="fitness_level">
+                                <option value="">Select your fitness level</option>
+                                <option value="beginner">Beginner - Just starting out</option>
+                                <option value="some-experience">Some Experience - Exercise occasionally</option>
+                                <option value="intermediate">Intermediate - Regular exercise routine</option>
+                                <option value="advanced">Advanced - Very active lifestyle</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="goals" class="form-label">Primary Fitness Goals</label>
+                            <div class="row g-2">
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="weightLoss" name="goals" value="weight_loss">
+                                        <label class="form-check-label" for="weightLoss">Weight Loss</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="muscleGain" name="goals" value="muscle_gain">
+                                        <label class="form-check-label" for="muscleGain">Build Muscle</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="strength" name="goals" value="strength">
+                                        <label class="form-check-label" for="strength">Increase Strength</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="endurance" name="goals" value="endurance">
+                                        <label class="form-check-label" for="endurance">Improve Endurance</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="flexibility" name="goals" value="flexibility">
+                                        <label class="form-check-label" for="flexibility">Increase Flexibility</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="health" name="goals" value="health">
+                                        <label class="form-check-label" for="health">Overall Health</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="currentApp" class="form-label">Current Fitness App (if any)</label>
+                            <input type="text" class="form-control" id="currentApp" name="current_app" 
+                                   placeholder="e.g., MyFitnessPal, Strava, Nike Training Club">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="message" class="form-label">Tell Me About Yourself *</label>
+                            <textarea class="form-control" id="message" name="message" rows="5" required 
+                                      placeholder="What are you hoping to achieve? Any injuries or concerns I should know about? What's your biggest challenge with fitness?"></textarea>
+                        </div>
+                        
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-warning btn-lg px-5">
+                                <i class="fas fa-paper-plane me-2"></i>Send Message
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item mb-3">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                Do I need to download a new app to work with you?
+                            </button>
+                        </h2>
+                        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                <p>Not at all! I work with you through whatever fitness app you're already using and comfortable with. Whether it's MyFitnessPal, Strava, Nike Training Club, or any other platform, I'll provide guidance and support through your existing app.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item mb-3">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                What makes your approach different for people over 40?
+                            </button>
+                        </h2>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                <p>Adults over 40 have unique considerations: hormone changes, joint health, recovery needs, and busy lifestyles. My programs prioritize sustainable habits, injury prevention, and realistic time commitments while still delivering excellent results.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item mb-3">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                How quickly will I see results?
+                            </button>
+                        </h2>
+                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                <p>Most clients notice improvements in energy and strength within 2-3 weeks. Visible physical changes typically become apparent in 6-8 weeks with consistent effort. Remember, sustainable results take time, and I'm here to support you throughout the entire journey.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item mb-3">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                What if I have injuries or physical limitations?
+                            </button>
+                        </h2>
+                        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                <p>I specialize in working with clients who have various physical considerations. Every program is customized to work around limitations while still challenging you appropriately. I work closely with healthcare providers when needed.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                How much time do I need to commit to see results?
+                            </button>
+                        </h2>
+                        <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                <p>Great results are possible with just 3-4 workouts per week, 30-45 minutes each. I design efficient programs that respect your busy schedule while maximizing results. Quality over quantity is always my approach.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Final CTA -->
+<section class="py-5 bg-dark text-white">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-lg-8">
+                <h3 class="mb-4">Your Strongest Years Are Ahead of You</h3>
+                <p class="lead mb-4">
+                    Don't let another day pass wishing you had started yesterday. 
+                    Your health is your greatest investment. Let's make it happen together.
+                </p>
+                <div class="d-flex gap-3 justify-content-center flex-wrap">
+                    <a href="tel:+15551234567" class="btn btn-warning btn-lg">
+                        <i class="fas fa-phone me-2"></i>Call Now
+                    </a>
+                    <a href="mailto:info@anvilfitness.com" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-envelope me-2"></i>Send Email
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
