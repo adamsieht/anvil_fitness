@@ -89,6 +89,9 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Login URL - redirect to Django admin login
+LOGIN_URL = '/admin/login/'
+
 # Email configuration
 # Use 'console' backend for testing (prints to console) or 'smtp' for real emails
 email_backend_type = os.getenv('EMAIL_BACKEND', 'console')
