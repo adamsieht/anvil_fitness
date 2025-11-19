@@ -10,6 +10,9 @@ urlpatterns = [
     path('client-portal/', views.client_portal, name='client_portal'),
     path('health/', views.health_check, name='health_check'),
 
+    # Management dashboard
+    path('manage/', views.manage_dashboard, name='manage_dashboard'),
+
     # Management pages (avoid conflict with Django admin)
     path('manage/inquiries/pending/', views.admin_pending_inquiries, name='admin_pending_inquiries'),
     path('manage/clients/active/', views.admin_active_clients, name='admin_active_clients'),

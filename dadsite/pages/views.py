@@ -141,6 +141,33 @@ def health_check(request):
 
 @login_required
 @user_passes_test(is_staff_user)
+def manage_dashboard(request):
+    """Main management dashboard with links to all admin pages"""
+    # Get summary statistics
+    total_pending_leads = ClientInquiry.objects.filter(group='lead', lead_status='pending').count()
+    total_approved_leads = ClientInquiry.objects.filter(group='lead', lead_status='approved').count()
+    total_denied_leads = ClientInquiry.objects.filter(group='lead', lead_status='denied').count()
+
+    all_clients = ClientInquiry.objects.filter(group='client')
+    total_clients = all_clients.count()
+    total_active = all_clients.filter(client_status='active').count()
+    total_contacted = all_clients.filter(client_status='contacted').count()
+    total_inactive = all_clients.filter(client_status='inactive').count()
+
+    context = {
+        'total_pending_leads': total_pending_leads,
+        'total_approved_leads': total_approved_leads,
+        'total_denied_leads': total_denied_leads,
+        'total_clients': total_clients,
+        'total_active': total_active,
+        'total_contacted': total_contacted,
+        'total_inactive': total_inactive,
+    }
+    return render(request, 'admin/dashboard.html', context)
+
+
+@login_required
+@user_passes_test(is_staff_user)
 def admin_pending_inquiries(request):
     """Admin page to review pending lead inquiries"""
     pending_leads = ClientInquiry.objects.filter(group='lead', lead_status='pending').order_by('-submitted_at')
