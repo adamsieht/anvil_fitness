@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.core.cache import cache
 
 
 class ContentBlock(models.Model):
@@ -217,3 +218,60 @@ class AlertSubscription(models.Model):
     def __str__(self):
         status = "✓" if self.is_subscribed else "✗"
         return f"{status} {self.recipient.name} → {self.alert_type.name}"
+
+
+class URLPermission(models.Model):
+    """Control visibility and access to URLs based on user authentication status"""
+
+    VISIBILITY_CHOICES = [
+        ('public', 'Visible to Everyone'),
+        ('admin_only', 'Visible to Admin Only'),
+        ('hidden', 'Visible to Nobody (404)'),
+    ]
+
+    url_pattern = models.CharField(
+        max_length=200,
+        unique=True,
+        help_text="URL pattern (e.g., '/about/', '/manage/', '/tips/'). Child URLs inherit permissions (e.g., '/tips/' controls '/tips/1/', '/tips/2/')"
+    )
+    visibility = models.CharField(
+        max_length=20,
+        choices=VISIBILITY_CHOICES,
+        default='public',
+        help_text="Control who can access this URL"
+    )
+    description = models.CharField(
+        max_length=200,
+        blank=True,
+        help_text="Description of what this URL is for"
+    )
+    is_active = models.BooleanField(
+        default=True,
+        help_text="Enable/disable this permission rule"
+    )
+    order = models.IntegerField(
+        default=0,
+        help_text="Processing order (lower numbers processed first). More specific patterns should have lower order."
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['order', 'url_pattern']
+        verbose_name = 'URL Permission'
+        verbose_name_plural = 'URL Permissions'
+
+    def __str__(self):
+        visibility_display = dict(self.VISIBILITY_CHOICES).get(self.visibility, self.visibility)
+        status = "✓" if self.is_active else "✗"
+        return f"{status} {self.url_pattern} → {visibility_display}"
+
+    def save(self, *args, **kwargs):
+        # Clear cache when permissions are updated
+        cache.delete('url_permissions_cache')
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        # Clear cache when permissions are deleted
+        cache.delete('url_permissions_cache')
+        super().delete(*args, **kwargs)

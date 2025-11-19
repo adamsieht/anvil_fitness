@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ContentBlock, Announcement, ClientInquiry, EmailRecipient, AlertType, AlertSubscription
+from .models import ContentBlock, Announcement, ClientInquiry, EmailRecipient, AlertType, AlertSubscription, URLPermission
 
 
 @admin.register(ContentBlock)
@@ -187,3 +187,33 @@ class AlertSubscriptionAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         }),
     )
+
+
+@admin.register(URLPermission)
+class URLPermissionAdmin(admin.ModelAdmin):
+    list_display = ['url_pattern', 'visibility', 'description', 'is_active', 'order', 'updated_at']
+    list_filter = ['visibility', 'is_active']
+    search_fields = ['url_pattern', 'description']
+    list_editable = ['visibility', 'is_active', 'order']
+    ordering = ['order', 'url_pattern']
+    readonly_fields = ['created_at', 'updated_at']
+
+    fieldsets = (
+        ('URL Pattern', {
+            'fields': ('url_pattern', 'description'),
+            'description': 'Define the URL path to control. Parent URLs control child URLs (e.g., /tips/ controls /tips/1/, /tips/2/, etc.)'
+        }),
+        ('Permission Settings', {
+            'fields': ('visibility', 'is_active', 'order'),
+            'description': 'Set visibility and processing order. Lower order numbers are checked first (more specific patterns should have lower order).'
+        }),
+        ('Metadata', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )
+
+    def save_model(self, request, obj, form, change):
+        """Display message about cache clearing"""
+        super().save_model(request, obj, form, change)
+        self.message_user(request, f"URL permission updated. Cache cleared for immediate effect.", level='SUCCESS')
